@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class SpringJpaConfig {
 
     @Bean
-    public SpringJpaStorage springMongoDbStorage() {
+    public SpringJpaStorage springJpaStorage() {
         return SpringJpaStorage.instance();
     }
 }
