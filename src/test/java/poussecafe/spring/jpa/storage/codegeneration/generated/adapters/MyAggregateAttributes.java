@@ -1,12 +1,14 @@
 package poussecafe.spring.jpa.storage.codegeneration.generated.adapters;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Version;
 import poussecafe.attribute.Attribute;
 import poussecafe.attribute.AttributeBuilder;
 import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregate;
 import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateId;
 
+@Entity
 public class MyAggregateAttributes implements MyAggregate.Attributes {
 
     @Override

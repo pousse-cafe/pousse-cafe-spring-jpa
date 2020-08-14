@@ -1,7 +1,8 @@
 package poussecafe.spring.jpa.storage.codegeneration;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Version;
 import poussecafe.source.generation.AggregateAttributesImplementationEditor;
 import poussecafe.source.generation.tools.ComilationUnitEditor;
 import poussecafe.source.model.Aggregate;
@@ -13,8 +14,10 @@ public class JpaAttributesImplementationEditor {
     public void edit() {
         compilationUnitEditor.addImportFirst(Version.class.getCanonicalName());
         compilationUnitEditor.addImportFirst(Id.class.getCanonicalName());
+        compilationUnitEditor.addImportFirst(Entity.class.getCanonicalName());
 
         var typeEditor = compilationUnitEditor.typeDeclaration();
+        typeEditor.modifiers().markerAnnotation(Entity.class);
 
         var identifierField = typeEditor.field(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME).get(0);
         identifierField.modifiers().markerAnnotation(Id.class);
