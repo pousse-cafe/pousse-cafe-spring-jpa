@@ -1,6 +1,6 @@
 package poussecafe.spring.jpa.storage.codegeneration;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import poussecafe.source.analysis.Name;
 import poussecafe.source.generation.AggregateCodeGenerationConventions;
 import poussecafe.source.generation.tools.AstWrapper;
 import poussecafe.source.generation.tools.ComilationUnitEditor;
@@ -15,7 +15,8 @@ public class JpaDataRepositoryEditor {
     public void edit() {
         compilationUnitEditor.setPackage(AggregateCodeGenerationConventions.adaptersPackageName(aggregate));
 
-        compilationUnitEditor.addImportLast(JpaRepository.class);
+        var jpaRepositoryTypeName = new Name("org.springframework.data.jpa.repository.JpaRepository");
+        compilationUnitEditor.addImportLast(jpaRepositoryTypeName);
 
         var typeEditor = compilationUnitEditor.typeDeclaration();
 
@@ -24,7 +25,7 @@ public class JpaDataRepositoryEditor {
         var typeName = JpaStorageAdaptersCodeGenerator.aggregateJpaRepositoryTypeName(aggregate);
         typeEditor.setName(typeName);
 
-        var mongoRepositoryType = ast.newParameterizedType(JpaRepository.class);
+        var mongoRepositoryType = ast.newParameterizedType(jpaRepositoryTypeName.getIdentifier());
         mongoRepositoryType.typeArguments().add(ast.newSimpleType(
                 AggregateCodeGenerationConventions.aggregateAttributesImplementationTypeName(aggregate).getIdentifier()));
         mongoRepositoryType.typeArguments().add(ast.newSimpleType("String"));

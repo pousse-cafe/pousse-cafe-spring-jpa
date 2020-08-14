@@ -1,8 +1,6 @@
 package poussecafe.spring.jpa.storage.codegeneration;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import poussecafe.source.analysis.Name;
 import poussecafe.source.generation.AggregateAttributesImplementationEditor;
 import poussecafe.source.generation.tools.ComilationUnitEditor;
 import poussecafe.source.model.Aggregate;
@@ -12,18 +10,21 @@ import static java.util.Objects.requireNonNull;
 public class JpaAttributesImplementationEditor {
 
     public void edit() {
-        compilationUnitEditor.addImportFirst(Version.class.getCanonicalName());
-        compilationUnitEditor.addImportFirst(Id.class.getCanonicalName());
-        compilationUnitEditor.addImportFirst(Entity.class.getCanonicalName());
+        var versionTypeName = new Name("javax.persistence.Version");
+        compilationUnitEditor.addImportFirst(versionTypeName);
+        var idTypeName = new Name("javax.persistence.Id");
+        compilationUnitEditor.addImportFirst(idTypeName);
+        var entityTypeName = new Name("javax.persistence.Entity");
+        compilationUnitEditor.addImportFirst(entityTypeName);
 
         var typeEditor = compilationUnitEditor.typeDeclaration();
-        typeEditor.modifiers().markerAnnotation(Entity.class);
+        typeEditor.modifiers().markerAnnotation(entityTypeName);
 
         var identifierField = typeEditor.field(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME).get(0);
-        identifierField.modifiers().markerAnnotation(Id.class);
+        identifierField.modifiers().markerAnnotation(idTypeName);
 
         var versionField = typeEditor.field(AggregateAttributesImplementationEditor.VERSION_FIELD_NAME).get(0);
-        versionField.modifiers().markerAnnotation(Version.class);
+        versionField.modifiers().markerAnnotation(versionTypeName);
         versionField.modifiers().removeAnnotations(SuppressWarnings.class);
 
         compilationUnitEditor.flush();
