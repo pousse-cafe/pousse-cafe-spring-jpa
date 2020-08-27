@@ -1,9 +1,9 @@
 package poussecafe.spring.jpa.storage.codegeneration;
 
 import poussecafe.source.analysis.Name;
-import poussecafe.source.generation.AggregateCodeGenerationConventions;
+import poussecafe.source.generation.NamingConventions;
 import poussecafe.source.generation.tools.AstWrapper;
-import poussecafe.source.generation.tools.ComilationUnitEditor;
+import poussecafe.source.generation.tools.CompilationUnitEditor;
 import poussecafe.source.generation.tools.Visibility;
 import poussecafe.source.model.Aggregate;
 
@@ -13,10 +13,10 @@ import static java.util.Objects.requireNonNull;
 public class JpaDataRepositoryEditor {
 
     public void edit() {
-        compilationUnitEditor.setPackage(AggregateCodeGenerationConventions.adaptersPackageName(aggregate));
+        compilationUnitEditor.setPackage(NamingConventions.adaptersPackageName(aggregate));
 
         var jpaRepositoryTypeName = new Name("org.springframework.data.jpa.repository.JpaRepository");
-        compilationUnitEditor.addImportLast(jpaRepositoryTypeName);
+        compilationUnitEditor.addImport(jpaRepositoryTypeName);
 
         var typeEditor = compilationUnitEditor.typeDeclaration();
 
@@ -27,7 +27,7 @@ public class JpaDataRepositoryEditor {
 
         var mongoRepositoryType = ast.newParameterizedType(jpaRepositoryTypeName.getIdentifier());
         mongoRepositoryType.typeArguments().add(ast.newSimpleType(
-                AggregateCodeGenerationConventions.aggregateAttributesImplementationTypeName(aggregate).getIdentifier()));
+                NamingConventions.aggregateAttributesImplementationTypeName(aggregate).getIdentifier()));
         mongoRepositoryType.typeArguments().add(ast.newSimpleType("String"));
         typeEditor.addSuperinterface(mongoRepositoryType);
 
@@ -44,12 +44,12 @@ public class JpaDataRepositoryEditor {
             requireNonNull(editor.compilationUnitEditor);
             requireNonNull(editor.aggregate);
 
-            editor.ast = new AstWrapper(editor.compilationUnitEditor.ast());
+            editor.ast = editor.compilationUnitEditor.ast();
 
             return editor;
         }
 
-        public Builder compilationUnitEditor(ComilationUnitEditor compilationUnitEditor) {
+        public Builder compilationUnitEditor(CompilationUnitEditor compilationUnitEditor) {
             editor.compilationUnitEditor = compilationUnitEditor;
             return this;
         }
@@ -64,7 +64,7 @@ public class JpaDataRepositoryEditor {
 
     }
 
-    private ComilationUnitEditor compilationUnitEditor;
+    private CompilationUnitEditor compilationUnitEditor;
 
     private AstWrapper ast;
 }

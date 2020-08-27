@@ -2,7 +2,7 @@ package poussecafe.spring.jpa.storage.codegeneration;
 
 import poussecafe.source.analysis.Name;
 import poussecafe.source.generation.AggregateAttributesImplementationEditor;
-import poussecafe.source.generation.tools.ComilationUnitEditor;
+import poussecafe.source.generation.tools.CompilationUnitEditor;
 import poussecafe.source.model.Aggregate;
 
 import static java.util.Objects.requireNonNull;
@@ -11,11 +11,11 @@ public class JpaAttributesImplementationEditor {
 
     public void edit() {
         var versionTypeName = new Name("javax.persistence.Version");
-        compilationUnitEditor.addImportFirst(versionTypeName);
+        compilationUnitEditor.addImport(versionTypeName);
         var idTypeName = new Name("javax.persistence.Id");
-        compilationUnitEditor.addImportFirst(idTypeName);
+        compilationUnitEditor.addImport(idTypeName);
         var entityTypeName = new Name("javax.persistence.Entity");
-        compilationUnitEditor.addImportFirst(entityTypeName);
+        compilationUnitEditor.addImport(entityTypeName);
 
         var typeEditor = compilationUnitEditor.typeDeclaration();
         typeEditor.modifiers().markerAnnotation(entityTypeName);
@@ -42,7 +42,7 @@ public class JpaAttributesImplementationEditor {
             return editor;
         }
 
-        public Builder compilationUnitEditor(ComilationUnitEditor compilationUnitEditor) {
+        public Builder compilationUnitEditor(CompilationUnitEditor compilationUnitEditor) {
             editor.compilationUnitEditor = compilationUnitEditor;
             return this;
         }
@@ -57,5 +57,5 @@ public class JpaAttributesImplementationEditor {
 
     }
 
-    private ComilationUnitEditor compilationUnitEditor;
+    private CompilationUnitEditor compilationUnitEditor;
 }
