@@ -47,7 +47,7 @@ public class JpaStorageAdaptersCodeGenerator extends StorageAdaptersCodeGenerato
 
     public static Name aggregateJpaRepositoryTypeName(Aggregate aggregate) {
         return new Name(NamingConventions.adaptersPackageName(aggregate),
-                aggregate.name() + "DataJpaRepository");
+                aggregate.simpleName() + "DataJpaRepository");
     }
 
     @Override
