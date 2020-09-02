@@ -38,11 +38,13 @@ public class JpaStorageAdaptersCodeGenerator extends StorageAdaptersCodeGenerato
     private void addJpaDataRepository(Aggregate aggregate) {
         var typeName = aggregateJpaRepositoryTypeName(aggregate);
         var compilationUnitEditor = compilationUnitEditor(typeName);
-        var editor = new JpaDataRepositoryEditor.Builder()
-                .compilationUnitEditor(compilationUnitEditor)
-                .aggregate(aggregate)
-                .build();
-        editor.edit();
+        if(compilationUnitEditor.isNew()) {
+            var editor = new JpaDataRepositoryEditor.Builder()
+                    .compilationUnitEditor(compilationUnitEditor)
+                    .aggregate(aggregate)
+                    .build();
+            editor.edit();
+        }
     }
 
     public static Name aggregateJpaRepositoryTypeName(Aggregate aggregate) {
