@@ -10,22 +10,28 @@ import static java.util.Objects.requireNonNull;
 public class JpaAttributesImplementationEditor {
 
     public void edit() {
-        var versionTypeName = new Name("javax.persistence.Version");
-        compilationUnitEditor.addImport(versionTypeName);
-        var idTypeName = new Name("javax.persistence.Id");
-        compilationUnitEditor.addImport(idTypeName);
-        var entityTypeName = new Name("javax.persistence.Entity");
-        compilationUnitEditor.addImport(entityTypeName);
-
         var typeEditor = compilationUnitEditor.typeDeclaration();
-        typeEditor.modifiers().markerAnnotation(entityTypeName);
 
-        var identifierField = typeEditor.field(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME).get(0);
-        identifierField.modifiers().markerAnnotation(idTypeName);
+        var entityAnnotationTypeName = new Name("javax.persistence.Entity");
+        if(!compilationUnitEditor.hasImport(entityAnnotationTypeName.toString())) {
+            compilationUnitEditor.addImport(entityAnnotationTypeName);
+            typeEditor.modifiers().markerAnnotation(entityAnnotationTypeName);
+        }
 
-        var versionField = typeEditor.field(AggregateAttributesImplementationEditor.VERSION_FIELD_NAME).get(0);
-        versionField.modifiers().markerAnnotation(versionTypeName);
-        versionField.modifiers().removeAnnotations(SuppressWarnings.class);
+        var idAnnotationTypeName = new Name("javax.persistence.Id");
+        if(!compilationUnitEditor.hasImport(idAnnotationTypeName.toString())) {
+            compilationUnitEditor.addImport(idAnnotationTypeName);
+            var identifierField = typeEditor.field(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME).get(0);
+            identifierField.modifiers().markerAnnotation(idAnnotationTypeName);
+        }
+
+        var versionAnnotationTypeName = new Name("javax.persistence.Version");
+        if(!compilationUnitEditor.hasImport(versionAnnotationTypeName.toString())) {
+            compilationUnitEditor.addImport(versionAnnotationTypeName);
+            var versionField = typeEditor.field(AggregateAttributesImplementationEditor.VERSION_FIELD_NAME).get(0);
+            versionField.modifiers().markerAnnotation(versionAnnotationTypeName);
+            versionField.modifiers().removeAnnotations(SuppressWarnings.class);
+        }
 
         compilationUnitEditor.flush();
     }
