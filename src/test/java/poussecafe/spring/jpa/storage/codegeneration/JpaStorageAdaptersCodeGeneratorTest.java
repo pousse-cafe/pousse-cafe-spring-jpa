@@ -13,6 +13,7 @@ public class JpaStorageAdaptersCodeGeneratorTest extends GeneratorTest {
     protected void givenStorageGenerator() {
         generator = new JpaStorageAdaptersCodeGenerator.Builder()
                 .sourceDirectory(sourceDirectory())
+                .codeFormatterProfile(getClass().getResourceAsStream("/CodeFormatterProfileSample.xml"))
                 .build();
     }
 
