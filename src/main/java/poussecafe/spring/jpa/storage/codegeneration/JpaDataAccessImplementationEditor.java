@@ -2,10 +2,10 @@ package poussecafe.spring.jpa.storage.codegeneration;
 
 import poussecafe.discovery.DataAccessImplementation;
 import poussecafe.source.analysis.Name;
+import poussecafe.source.analysis.Visibility;
 import poussecafe.source.generation.NamingConventions;
 import poussecafe.source.generation.tools.AstWrapper;
 import poussecafe.source.generation.tools.CompilationUnitEditor;
-import poussecafe.source.generation.tools.Visibility;
 import poussecafe.source.model.Aggregate;
 import poussecafe.spring.jpa.storage.JpaDataAccess;
 import poussecafe.spring.jpa.storage.SpringJpaStorage;
