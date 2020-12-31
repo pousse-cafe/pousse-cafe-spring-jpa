@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import poussecafe.discovery.DataAccessImplementation;
 import poussecafe.spring.jpa.storage.JpaDataAccess;
 import poussecafe.spring.jpa.storage.SpringJpaStorage;
-import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregate;
 import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateDataAccess;
 import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateId;
+import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateRoot;
 
 @DataAccessImplementation(
-    aggregateRoot = MyAggregate.class,
+    aggregateRoot = MyAggregateRoot.class,
     dataImplementation = MyAggregateAttributes.class,
     storageName = SpringJpaStorage.NAME
 )

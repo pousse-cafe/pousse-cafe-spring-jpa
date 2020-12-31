@@ -5,11 +5,11 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 import poussecafe.attribute.Attribute;
 import poussecafe.attribute.AttributeBuilder;
-import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregate;
 import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateId;
+import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateRoot;
 
 @Entity
-public class MyAggregateAttributes implements MyAggregate.Attributes {
+public class MyAggregateAttributes implements MyAggregateRoot.Attributes {
 
     @Override
     public Attribute<MyAggregateId> identifier() {
