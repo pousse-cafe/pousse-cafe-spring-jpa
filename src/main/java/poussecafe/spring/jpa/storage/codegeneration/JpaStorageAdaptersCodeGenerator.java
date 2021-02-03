@@ -2,9 +2,11 @@ package poussecafe.spring.jpa.storage.codegeneration;
 
 import java.io.InputStream;
 import java.nio.file.Path;
+import org.eclipse.core.runtime.preferences.IScopeContext;
 import poussecafe.source.analysis.Name;
 import poussecafe.source.generation.NamingConventions;
 import poussecafe.source.generation.StorageAdaptersCodeGenerator;
+import poussecafe.source.generation.internal.CodeGeneratorBuilder;
 import poussecafe.source.generation.tools.CompilationUnitEditor;
 import poussecafe.source.model.Aggregate;
 
@@ -60,28 +62,38 @@ public class JpaStorageAdaptersCodeGenerator extends StorageAdaptersCodeGenerato
 
     public static final String STORAGE_NAME = "Jpa";
 
-    public static class Builder {
+    public static class Builder implements CodeGeneratorBuilder {
 
         private JpaStorageAdaptersCodeGenerator generator = new JpaStorageAdaptersCodeGenerator();
 
+        @Override
         public JpaStorageAdaptersCodeGenerator build() {
             requireNonNull(generator.sourceDirectory);
             requireNonNull(generator.formatterOptions);
             return generator;
         }
 
+        @Override
         public Builder sourceDirectory(Path sourceDirectory) {
             generator.sourceDirectory = sourceDirectory;
             return this;
         }
 
+        @Override
         public Builder codeFormatterProfile(Path profile) {
             generator.loadProfileFromFile(profile);
             return this;
         }
 
+        @Override
         public Builder codeFormatterProfile(InputStream profile) {
             generator.loadProfileFromFile(profile);
+            return this;
+        }
+
+        @Override
+        public CodeGeneratorBuilder preferencesContext(IScopeContext context) {
+            generator.loadPreferencesFromContext(context);
             return this;
         }
     }
