@@ -6,7 +6,7 @@ import poussecafe.storage.TransactionRunner;
 
 public class SpringJpaStorage extends Storage {
 
-    public static final String NAME = "spring-jpa";
+    public static final String NAME = "SpringJpa";
 
     public static SpringJpaStorage instance() {
         return INSTANCE;

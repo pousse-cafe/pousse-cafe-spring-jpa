@@ -13,8 +13,8 @@ import poussecafe.spring.jpa.storage.codegeneration.generated.MyAggregateRoot;
     dataImplementation = MyAggregateAttributes.class,
     storageName = SpringJpaStorage.NAME
 )
-public class MyAggregateJpaDataAccess extends JpaDataAccess<MyAggregateId, MyAggregateAttributes, String> implements
-        MyAggregateDataAccess<MyAggregateAttributes> {
+public class MyAggregateSpringJpaDataAccess extends JpaDataAccess<MyAggregateId, MyAggregateAttributes, String>
+        implements MyAggregateDataAccess<MyAggregateAttributes> {
 
     @Override
     protected String convertId(MyAggregateId key) {
@@ -22,10 +22,10 @@ public class MyAggregateJpaDataAccess extends JpaDataAccess<MyAggregateId, MyAgg
     }
 
     @Override
-    protected MyAggregateDataJpaRepository jpaRepository() {
+    protected MyAggregateAttributesJpaRepository jpaRepository() {
         return repository;
     }
 
     @Autowired
-    private MyAggregateDataJpaRepository repository;
+    private MyAggregateAttributesJpaRepository repository;
 }

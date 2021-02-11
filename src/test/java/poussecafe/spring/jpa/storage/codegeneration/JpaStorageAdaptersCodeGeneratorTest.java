@@ -1,6 +1,7 @@
 package poussecafe.spring.jpa.storage.codegeneration;
 
 import poussecafe.source.generation.GeneratorTest;
+import poussecafe.spring.jpa.storage.source.JpaStorageAdaptersCodeGenerator;
 
 public class JpaStorageAdaptersCodeGeneratorTest extends GeneratorTest {
 

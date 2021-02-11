@@ -1,14 +1,16 @@
-package poussecafe.spring.jpa.storage.codegeneration;
+package poussecafe.spring.jpa.storage.source;
 
 import java.io.InputStream;
 import java.nio.file.Path;
 import org.eclipse.core.runtime.preferences.IScopeContext;
-import poussecafe.source.analysis.Name;
+import poussecafe.source.analysis.ClassName;
+import poussecafe.source.generation.AggregatePackage;
 import poussecafe.source.generation.NamingConventions;
 import poussecafe.source.generation.StorageAdaptersCodeGenerator;
 import poussecafe.source.generation.internal.CodeGeneratorBuilder;
 import poussecafe.source.generation.tools.CompilationUnitEditor;
 import poussecafe.source.model.Aggregate;
+import poussecafe.spring.jpa.storage.SpringJpaStorage;
 
 import static java.util.Objects.requireNonNull;
 
@@ -39,7 +41,7 @@ public class JpaStorageAdaptersCodeGenerator extends StorageAdaptersCodeGenerato
     }
 
     private void addJpaDataRepository(Aggregate aggregate) {
-        var typeName = aggregateJpaRepositoryTypeName(aggregate);
+        var typeName = aggregateJpaRepositoryTypeName(aggregate.aggregatePackage());
         var compilationUnitEditor = compilationUnitEditor(typeName);
         if(compilationUnitEditor.isNew()) {
             var editor = new JpaDataRepositoryEditor.Builder()
@@ -50,17 +52,15 @@ public class JpaStorageAdaptersCodeGenerator extends StorageAdaptersCodeGenerato
         }
     }
 
-    public static Name aggregateJpaRepositoryTypeName(Aggregate aggregate) {
-        return new Name(NamingConventions.adaptersPackageName(aggregate),
-                aggregate.simpleName() + "DataJpaRepository");
+    public static ClassName aggregateJpaRepositoryTypeName(AggregatePackage aggregate) {
+        return new ClassName(NamingConventions.adaptersPackageName(aggregate),
+                NamingConventions.aggregateAttributesImplementationTypeName(aggregate).simple() + "JpaRepository");
     }
 
     @Override
     protected String storageName() {
-        return STORAGE_NAME;
+        return SpringJpaStorage.NAME;
     }
-
-    public static final String STORAGE_NAME = "Jpa";
 
     public static class Builder implements CodeGeneratorBuilder {
 
