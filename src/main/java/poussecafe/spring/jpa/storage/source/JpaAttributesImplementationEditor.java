@@ -19,14 +19,16 @@ public class JpaAttributesImplementationEditor {
         }
 
         var idAnnotationTypeName = new ClassName("javax.persistence.Id");
-        if(!compilationUnitEditor.hasImport(idAnnotationTypeName.toString())) {
+        if(!compilationUnitEditor.hasImport(idAnnotationTypeName.toString())
+                && typeEditor.hasField(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME)) {
             compilationUnitEditor.addImport(idAnnotationTypeName);
             var identifierField = typeEditor.field(AggregateAttributesImplementationEditor.IDENTIFIER_FIELD_NAME).get(0);
             identifierField.modifiers().markerAnnotation(idAnnotationTypeName);
         }
 
         var versionAnnotationTypeName = new ClassName("javax.persistence.Version");
-        if(!compilationUnitEditor.hasImport(versionAnnotationTypeName.toString())) {
+        if(!compilationUnitEditor.hasImport(versionAnnotationTypeName.toString())
+                && typeEditor.hasField(AggregateAttributesImplementationEditor.VERSION_FIELD_NAME)) {
             compilationUnitEditor.addImport(versionAnnotationTypeName);
             var versionField = typeEditor.field(AggregateAttributesImplementationEditor.VERSION_FIELD_NAME).get(0);
             versionField.modifiers().markerAnnotation(versionAnnotationTypeName);
