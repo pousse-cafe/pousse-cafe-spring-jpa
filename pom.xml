@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.pousse-cafe-framework</groupId>
         <artifactId>pousse-cafe</artifactId>
-        <version>0.27.0</version>
+        <version>0.28.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>pousse-cafe-spring-jpa</artifactId>
@@ -18,8 +18,8 @@
     <dependencies>
         <dependency>
             <groupId>org.pousse-cafe-framework</groupId>
-            <artifactId>pousse-cafe-source</artifactId>
-            <version>0.27.0</version>
+            <artifactId>pousse-cafe-core</artifactId>
+            <version>0.28.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
